@@ -1,11 +1,15 @@
 export default class Ship {
+    #hitCount = 0;
+    #length;
+
     constructor(length) {
         this.#length = length;
-        this.#hitCount = 0;
     }
 
     hit() {
-        this.#hitCount = 0;
+        if (!this.isSunk()) {
+            this.#hitCount++;
+        }
     }
 
     isSunk() {
@@ -14,5 +18,9 @@ export default class Ship {
 
     getLength() {
         return this.#length;
+    }
+
+    getHitCount() {
+        return this.#hitCount;
     }
 }

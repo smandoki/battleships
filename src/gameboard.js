@@ -1,4 +1,5 @@
 import Ship from './ship';
+import { create2DArray, deepCloneArray } from './util';
 
 const GRID_SIZE = 7;
 
@@ -27,6 +28,7 @@ export default class Gameboard {
             this.#board[x][y] = 'miss';
         } else {
             this.#board[x][y].hit();
+            this.#board[x][y] = 'hit';
         }
     }
 
@@ -35,16 +37,20 @@ export default class Gameboard {
         for (let i = 0; i < length; i++) {
             if (direction === 'row') {
                 if (!this.#coordsIsValid(x + i, y)) return false;
-                if (this.#board[x + i][y] != undefined) return false;
             } else {
                 if (!this.#coordsIsValid(x, y + i)) return false;
-                if (this.#board[x][y + i] != undefined) return false;
             }
         }
+
+        return true;
     }
 
     #coordsIsValid(x, y) {
-        return x >= 0 && x < GRID_SIZE && y >= 0 && y < GRID_SIZE;
+        return (
+            x >= 0 && x < GRID_SIZE && 
+            y >= 0 && y < GRID_SIZE && 
+            this.#board[x][y] === undefined
+        );
     }
 
     isAllShipsSunk() {
@@ -54,14 +60,8 @@ export default class Gameboard {
 
         return true;
     }
-}
 
-function create2DArray(x, y) {
-    const arr = new Array(x);
-
-    for (let i = 0; i < x; i++) {
-        arr[i] = new Array(y);
+    getBoard() {
+        return deepCloneArray(this.#board);
     }
-
-    return arr;
 }
