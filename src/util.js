@@ -1,4 +1,5 @@
-//Place to store general utility functions
+//Place to store general utility functions and constants
+export const GRID_SIZE = 7;
 
 export function create2DArray(x, y) {
     const arr = new Array(x);
@@ -22,4 +23,15 @@ export function deepCloneArray(arr) {
     });
 
     return clone;
+}
+
+/**
+ * returns a random number between min (included) and max (excluded)
+ * 
+ * @param {number} min min (included)
+ * @param {number} max max (excluded)
+ * @returns integer
+ */
+export function getRndInteger(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
 }

@@ -1,7 +1,5 @@
 import Ship from './ship';
-import { create2DArray, deepCloneArray } from './util';
-
-const GRID_SIZE = 7;
+import { create2DArray, deepCloneArray, GRID_SIZE } from './util';
 
 export default class Gameboard {
     #ships = {};
