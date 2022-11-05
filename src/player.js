@@ -1,4 +1,4 @@
-import { create2DArray, GRID_SIZE, getRndInteger } from './util';
+import { create2DArray, GRID_SIZE, getRndInteger, deepCloneArray } from './util';
 
 export default class Player {
     #attackedList;
@@ -12,8 +12,8 @@ export default class Player {
 
         for (let i = 0; i < GRID_SIZE; i++) {
             for (let j = 0; j < GRID_SIZE; j++) {
-                if (this.#attackedList[i][j] != undefined) {
-                    possibleAttacks.push([i][j]);
+                if (this.#attackedList[i][j] != true) {
+                    possibleAttacks.push([i, j]);
                 }
             }
         }
@@ -24,5 +24,9 @@ export default class Player {
     attack(x, y, board) {
         board.receiveAttack(x, y);
         this.#attackedList[x][y] = true;
+    }
+
+    getAttackedList() {
+        return deepCloneArray(this.#attackedList);
     }
 }
