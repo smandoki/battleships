@@ -7,3 +7,15 @@
     --light-grey: #f7f7f7;
     --dark-grey: #757575;
 }
+
+body {
+    background-color: #f7f7f7;
+}
+
+header {
+    background-color: lightblue;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

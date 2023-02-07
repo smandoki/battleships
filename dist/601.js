@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkbattleships=self.webpackChunkbattleships||[]).push([[601],{729:(e,t,n)=>{n.r(t),n.d(t,{default:()=>s});const s={init:function(e){const t=document.createElement("p");t.innerText="hello world",e.appendChild(t)}}}}]);
