@@ -13,9 +13,36 @@ body {
 }
 
 header {
-    background-color: lightblue;
+    background-color: lightslategray;
     height: 80px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#root {
+    margin-top: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#shipPlacementPage {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.grid {
+    margin-top: 20px;
+    width: 600px;
+    height: 600px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(7, 1fr);
+    border: 1px solid black;
+}
+
+.cell {
+    border: 1px solid black;
 }
