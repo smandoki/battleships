@@ -1,7 +1,9 @@
 import { GRID_SIZE } from './util';
 import Gameboard from './gameboard';
+import gameboardPage from './gameboardPage';
 
 const shipPlacementPage = (function() {
+    const root = document.getElementById('root');
     const shipLengths = [2, 3, 3, 4, 5];
     const instructionList = [
         'Place your carrier (length: 5)',
@@ -14,7 +16,7 @@ const shipPlacementPage = (function() {
     let axis = 'row';
     let shipLength = shipLengths.pop();
 
-    const init = function (root) {
+    const init = function () {
         const page = document.createElement('div');
         page.setAttribute('id', 'shipPlacementPage');
 
@@ -41,7 +43,9 @@ const shipPlacementPage = (function() {
             const cell = document.createElement('div');
             cell.classList.add('cell');
             cell.dataset.index = i;
+
             cell.addEventListener('mouseover', drawShipPlaceholder);
+            cell.addEventListener('click', placeShip);
 
             grid.appendChild(cell);
         }
@@ -53,6 +57,25 @@ const shipPlacementPage = (function() {
     function changeAxis(e) {
         axis = axis === 'row' ? 'col' : 'row';
         e.target.innerText = axis === 'row' ? 'Axis: row' : 'Axis: column';
+    }
+
+    function placeShip(e) {
+        const index = e.target.dataset.index;
+        const { x, y } = indexToCoords(index);
+
+        if (gameboard.isValidPlacement(x, y, shipLength, axis)) {
+            gameboard.addShip(x, y, shipLength, axis);
+            addClassToCells(x, y, 'ship', axis, shipLength);
+
+            if (instructionList.length != 0) {
+                const instruction = document.querySelector('h2');
+                instruction.innerText = instructionList.shift();
+
+                shipLength = shipLengths.pop();
+            } else {
+                gameboardPage.init(gameboard);
+            }
+        }
     }
 
     function drawShipPlaceholder(e) {
