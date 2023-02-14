@@ -34,7 +34,7 @@ export default class Gameboard {
     }
 
     receiveAttack(x, y) {
-        if (this.#board[x][y] === undefined) {
+        if (isNaN(this.#board[x][y])) {
             this.#board[x][y] = 'miss';
         } else {
             this.#ships[this.#board[x][y]].hit();

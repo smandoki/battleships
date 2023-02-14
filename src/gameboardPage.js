@@ -1,5 +1,5 @@
 import Gameboard from './gameboard';
-import { GRID_SIZE, getRndInteger } from './util';
+import { GRID_SIZE, getRndInteger, coordsToIndex, indexToCoords } from './util';
 
 const gameboardPage = (function() {
     const root = document.getElementById('root');
@@ -42,6 +42,7 @@ const gameboardPage = (function() {
         //populate grid with cells
         for (let i = 0; i < GRID_SIZE * GRID_SIZE; i++) {
             const cell = document.createElement('div');
+            cell.dataset.index = i;
             cell.classList.add('cell');
             cell.addEventListener('click', attack);
 
@@ -54,9 +55,21 @@ const gameboardPage = (function() {
     }
 
     function attack(e) {
+        const index = e.target.dataset.index;
+        let { x, y } = indexToCoords(index);
+
         //handle player attack
+        if (computerBoard.getCell(x, y) === 'miss' || computerBoard.getCell(x, y) === 'hit') {
+            return;
+        }
+
+        computerBoard.receiveAttack(x, y);
 
         //handle computer attack
+        ({ x, y } = getRandomAttack());
+        playerBoard.receiveAttack(x, y);
+
+        updateGrids();
     }
 
     function placeRandomShips(board) {
@@ -110,15 +123,20 @@ const gameboardPage = (function() {
         }
     }
 
-    function indexToCoords(index) {
-        return {
-            y: Math.floor(index / GRID_SIZE),
-            x: index % GRID_SIZE
-        };
-    }
-
     function getRandomAttack() {
+        const attackOptions = [];
 
+        for (let i = 0; i < GRID_SIZE; i++) {
+            for (let j = 0; j < GRID_SIZE; j++) {
+                const cell = playerBoard.getCell(i, j);
+
+                if (!(cell === 'miss' || cell === 'hit')) {
+                    attackOptions.push({x: i, y: j});
+                }
+            }
+        }
+
+        return attackOptions[getRndInteger(0, attackOptions.length)];
     }
 
     return {

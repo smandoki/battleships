@@ -1,4 +1,4 @@
-import { GRID_SIZE } from './util';
+import { GRID_SIZE, coordsToIndex, indexToCoords } from './util';
 import Gameboard from './gameboard';
 import gameboardPage from './gameboardPage';
 
@@ -107,17 +107,6 @@ const shipPlacementPage = (function() {
 
             cells[index].classList.add(className);
         }
-    }
-
-    function indexToCoords(index) {
-        return {
-            y: Math.floor(index / GRID_SIZE),
-            x: index % GRID_SIZE
-        };
-    }
-
-    function coordsToIndex (x, y) {
-        return y * GRID_SIZE + x;
     }
 
     return {

@@ -35,3 +35,14 @@ export function deepCloneArray(arr) {
 export function getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
+
+export function coordsToIndex (x, y) {
+    return y * GRID_SIZE + x;
+}
+
+export function indexToCoords(index) {
+    return {
+        y: Math.floor(index / GRID_SIZE),
+        x: index % GRID_SIZE
+    };
+}
