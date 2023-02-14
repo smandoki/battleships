@@ -1,1 +1,0 @@
-(()=>{"use strict";const t={init:function(t){const e=document.createElement("p");e.innerText="hello world",t.appendChild(e)}},e=t,n=document.getElementById("root");e.init(n)})();

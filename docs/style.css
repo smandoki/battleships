@@ -50,3 +50,11 @@ button {
 .cell {
     border: 1px solid black;
 }
+
+.ship {
+    background-color: #757575;
+}
+
+.shipPlaceholder {
+    background-color: lightskyblue;
+}
