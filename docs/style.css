@@ -34,15 +34,24 @@ header {
     align-items: center;
 }
 
+#gameboardPage {
+    display: flex;
+    gap: 40px;
+}
+
 button {
     margin-top: 20px;
     margin-bottom: 10px;
     padding: 10px;
 }
 
+.computer-grid .cell:hover {
+    background-color: lightgray;
+}
+
 .grid {
-    width: 600px;
-    height: 600px;
+    width: 400px;
+    height: 400px;
     display: grid;
     border: 1px solid black;
 }
