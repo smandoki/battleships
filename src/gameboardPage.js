@@ -5,6 +5,7 @@ const gameboardPage = (function() {
     const root = document.getElementById('root');
     const computerBoard = new Gameboard();
     let playerBoard;
+    let gameover = false;
 
     const init = function (gameboard) {
         playerBoard = gameboard;
@@ -55,6 +56,8 @@ const gameboardPage = (function() {
     }
 
     function attack(e) {
+        if (gameover) return;
+
         const index = e.target.dataset.index;
         let { x, y } = indexToCoords(index);
 
@@ -70,6 +73,15 @@ const gameboardPage = (function() {
         playerBoard.receiveAttack(x, y);
 
         updateGrids();
+
+        //check if game is over
+        if (playerBoard.isAllShipsSunk()) {
+            alert('Computer wins. Refresh page to play again');
+            gameover = true;
+        } else if (computerBoard.isAllShipsSunk()) {
+            alert('You win! Refresh page to play again');
+            gameover = true;
+        }
     }
 
     function placeRandomShips(board) {
