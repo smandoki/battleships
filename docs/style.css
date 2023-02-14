@@ -67,3 +67,11 @@ button {
 .shipPlaceholder {
     background-color: lightskyblue;
 }
+
+.hit {
+    background-color: lightcoral;
+}
+
+.miss {
+    background-color: lightgreen;
+}

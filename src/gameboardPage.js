@@ -18,6 +18,7 @@ const gameboardPage = (function() {
         //create player grid
         const playerGrid = document.createElement('div');
         playerGrid.classList.add('grid');
+        playerGrid.classList.add('player-grid');
 
         playerGrid.style.gridTemplateColumns = `repeat(${GRID_SIZE}, 1fr)`;
         playerGrid.style.gridTemplateRows = `repeat(${GRID_SIZE}, 1fr)`;
@@ -47,8 +48,9 @@ const gameboardPage = (function() {
             computerGrid.appendChild(cell);
         }
         page.appendChild(computerGrid);
-
         root.appendChild(page);
+
+        updateGrids();
     }
 
     function attack(e) {
@@ -68,7 +70,7 @@ const gameboardPage = (function() {
             do {
                 x = getRndInteger(0, GRID_SIZE - 1);
                 y = getRndInteger(0, GRID_SIZE - 1);
-                direction = getRndInteger(0, 1) ? 'row' : 'col';
+                direction = getRndInteger(0, 2) === 0 ? 'row' : 'col';
             } while (!board.isValidPlacement(x, y, length, direction));
 
             board.addShip(x, y, length, direction);
@@ -76,7 +78,43 @@ const gameboardPage = (function() {
     }
 
     function updateGrids() {
+        const playerCells = document.querySelectorAll('.player-grid .cell');
+        const computerCells = document.querySelectorAll('.computer-grid .cell');
 
+        let i = 0;
+        for (const cell of playerCells) {
+            const { x, y } = indexToCoords(i++);
+            
+            const gameCell = playerBoard.getCell(x, y);
+
+            if (gameCell >= 0) {
+                cell.classList.add('ship');
+            } else if (gameCell === 'hit') {
+                cell.classList.add('hit');
+            } else if (gameCell === 'miss') {
+                cell.classList.add('miss');
+            }
+        }
+
+        i = 0;
+        for (const cell of computerCells) {
+            const { x, y } = indexToCoords(i++);
+            
+            const gameCell = computerBoard.getCell(x, y);
+
+            if (gameCell === 'hit') {
+                cell.classList.add('hit');
+            } else if (gameCell === 'miss') {
+                cell.classList.add('miss');
+            }
+        }
+    }
+
+    function indexToCoords(index) {
+        return {
+            y: Math.floor(index / GRID_SIZE),
+            x: index % GRID_SIZE
+        };
     }
 
     function getRandomAttack() {

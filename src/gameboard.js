@@ -84,4 +84,8 @@ export default class Gameboard {
     getBoard() {
         return deepCloneArray(this.#board);
     }
+
+    getCell(x, y) {
+        return this.#board[x][y];
+    }
 }
